@@ -21,18 +21,46 @@
                         <h2 class="header-title"><i class="bi bi-archive"></i> SlackView Archive Explorer</h2>
                         <div class="upload-area">
                             <div class="row align-items-center">
+                                <!-- Upload Section -->
                                 <div class="col-md-6">
                                     <label for="file-input" class="form-label">
                                         <i class="bi bi-folder2-open"></i> Select Slack Export Folder
                                     </label>
                                     <input type="file" id="file-input" class="form-control" webkitdirectory directory multiple>
                                 </div>
+                                <!-- Stats Section - Now takes full right side -->
                                 <div class="col-md-6">
-                                    <div class="progress-container">
-                                        <div class="progress" id="progress-bar" style="display: none;">
-                                            <div class="progress-bar" id="progress-fill" role="progressbar"></div>
+                                    <div id="stats-display" class="stats-display" style="display: none;">
+                                        <div class="row text-center g-2">
+                                            <div class="col-3">
+                                                <div class="stat-item">
+                                                    <i class="bi bi-hash"></i>
+                                                    <span id="stat-channels">0</span>
+                                                    <small>Channels</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="stat-item">
+                                                    <i class="bi bi-chat-dots"></i>
+                                                    <span id="stat-messages">0</span>
+                                                    <small>Messages</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="stat-item">
+                                                    <i class="bi bi-people"></i>
+                                                    <span id="stat-users">0</span>
+                                                    <small>Users</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="stat-item">
+                                                    <i class="bi bi-calendar-range"></i>
+                                                    <span id="stat-timespan">-</span>
+                                                    <small>Timespan</small>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div id="status" class="status-text"></div>
                                     </div>
                                 </div>
                             </div>
@@ -116,6 +144,20 @@
                     <p>No data loaded</p>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Progress Overlay - Top Right Corner -->
+    <div id="progress-overlay" class="progress-overlay" style="display: none;">
+        <div class="progress-card">
+            <div class="d-flex align-items-center mb-2">
+                <i class="bi bi-upload me-2"></i>
+                <span class="progress-title">Processing Files</span>
+            </div>
+            <div class="progress mb-2" id="progress-bar">
+                <div class="progress-bar progress-bar-striped progress-bar-animated" id="progress-fill" role="progressbar"></div>
+            </div>
+            <div id="status" class="progress-status"></div>
         </div>
     </div>
 

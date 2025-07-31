@@ -36,6 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
             channelInfo: document.getElementById('channel-info'),
             searchInput: document.getElementById('search-input'),
             searchBtn: document.getElementById('search-btn'),
+            progressOverlay: document.getElementById('progress-overlay'),
             progressBar: document.getElementById('progress-bar'),
             progressFill: document.getElementById('progress-fill'),
             status: document.getElementById('status'),
@@ -109,6 +110,9 @@ async function handleFileUpload(event) {
         }
         
         showStatus(`✅ Successfully loaded workspace with ${slackData.channels.length} channels and ${Object.keys(slackData.users).length} users`, 'success');
+        
+        // Step 4: Show stats display
+        updateStatsDisplay();
         
     } catch (error) {
         console.error('❌ Error processing files:', error);
@@ -496,46 +500,116 @@ function readJSONFile(file) {
 }
 
 function showStatus(message, type = 'info') {
-    const alertClass = `alert-${type}`;
-    elements.status.innerHTML = `<div class="alert ${alertClass} alert-dismissible fade show mb-2" role="alert">
-        ${message}
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-    </div>`;
-    
-    // Auto-dismiss after 5 seconds for success/info messages
-    if (type === 'success' || type === 'info') {
-        setTimeout(() => {
-            const alert = elements.status.querySelector('.alert');
-            if (alert) {
-                const bsAlert = new bootstrap.Alert(alert);
-                bsAlert.close();
-            }
-        }, 5000);
+    if (elements.status) {
+        elements.status.textContent = message;
     }
 }
 
 function showProgress(show) {
-    elements.progressBar.style.display = show ? 'block' : 'none';
+    if (elements.progressOverlay) {
+        elements.progressOverlay.style.display = show ? 'block' : 'none';
+    }
     if (!show) {
-        elements.progressFill.style.width = '0%';
-        elements.progressFill.classList.remove('progress-bar-animated');
+        if (elements.progressFill) {
+            elements.progressFill.style.width = '0%';
+            elements.progressFill.classList.remove('progress-bar-animated');
+        }
     } else {
-        elements.progressFill.classList.add('progress-bar-animated');
+        if (elements.progressFill) {
+            elements.progressFill.classList.add('progress-bar-animated');
+        }
     }
 }
 
 function updateProgress(percentage) {
-    elements.progressFill.style.width = `${percentage}%`;
-    elements.progressFill.setAttribute('aria-valuenow', percentage);
-    
-    // Add visual feedback
-    if (percentage >= 100) {
-        elements.progressFill.classList.remove('progress-bar-animated');
-        elements.progressFill.classList.add('bg-success');
-        setTimeout(() => {
-            showProgress(false);
-            elements.progressFill.classList.remove('bg-success');
-        }, 1000);
+    if (elements.progressFill) {
+        elements.progressFill.style.width = `${percentage}%`;
+        elements.progressFill.setAttribute('aria-valuenow', percentage);
+        
+        // Add visual feedback
+        if (percentage >= 100) {
+            elements.progressFill.classList.remove('progress-bar-animated');
+            elements.progressFill.classList.add('bg-success');
+            setTimeout(() => {
+                showProgress(false);
+                elements.progressFill.classList.remove('bg-success');
+            }, 1500);
+        }
     }
+}
+
+// Update stats display with workspace information
+function updateStatsDisplay() {
+    // Calculate stats
+    const stats = calculateWorkspaceStats();
+    
+    // Update DOM elements
+    document.getElementById('stat-channels').textContent = stats.channels;
+    document.getElementById('stat-messages').textContent = stats.messages;
+    document.getElementById('stat-users').textContent = stats.users;
+    document.getElementById('stat-timespan').textContent = stats.timespan;
+    
+    // Show the stats display
+    const statsDisplay = document.querySelector('.stats-display');
+    if (statsDisplay) {
+        statsDisplay.style.display = 'block';
+    }
+    
+    console.log('📊 Updated stats display:', stats);
+}
+
+// Calculate workspace statistics
+function calculateWorkspaceStats() {
+    const channelCount = slackData.channels.filter(channel => !channel.is_archived).length;
+    const userCount = Object.keys(slackData.users).length;
+    
+    // Calculate message count (approximate from loaded channels)
+    let messageCount = 0;
+    Object.values(slackData.channelMessages).forEach(messages => {
+        if (Array.isArray(messages)) {
+            messageCount += messages.length;
+        }
+    });
+    
+    // Calculate timespan from earliest to latest message
+    let earliestTimestamp = null;
+    let latestTimestamp = null;
+    
+    Object.values(slackData.channelMessages).forEach(messages => {
+        if (Array.isArray(messages)) {
+            messages.forEach(message => {
+                if (message.ts) {
+                    const timestamp = parseFloat(message.ts);
+                    if (!earliestTimestamp || timestamp < earliestTimestamp) {
+                        earliestTimestamp = timestamp;
+                    }
+                    if (!latestTimestamp || timestamp > latestTimestamp) {
+                        latestTimestamp = timestamp;
+                    }
+                }
+            });
+        }
+    });
+    
+    let timespan = 'N/A';
+    if (earliestTimestamp && latestTimestamp) {
+        const daysDiff = Math.ceil((latestTimestamp - earliestTimestamp) / 86400); // 86400 seconds in a day
+        if (daysDiff < 30) {
+            timespan = `${daysDiff} days`;
+        } else if (daysDiff < 365) {
+            const months = Math.ceil(daysDiff / 30);
+            timespan = `${months} months`;
+        } else {
+            const years = Math.ceil(daysDiff / 365);
+            timespan = `${years} years`;
+        }
+    }
+    
+    return {
+        channels: channelCount.toLocaleString(),
+        messages: messageCount > 0 ? messageCount.toLocaleString() : 'Loading...',
+        users: userCount.toLocaleString(),
+        timespan: timespan
+    };
 }
 

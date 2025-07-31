@@ -1,7 +1,4 @@
 # SlackView
-Interactive Slack Archive Explorer
-
-## 🚀 Overview
 
 SlackView is a web-based tool for viewing and exploring Slack workspace export data directly in your browser. No server setup required - just open in any modern web browser and drag-and-drop your Slack export files.
 
@@ -19,11 +16,6 @@ SlackView is a web-based tool for viewing and exploring Slack workspace export d
 
 ## 🛠️ Getting Started
 
-### Prerequisites
-
-- A modern web browser (Chrome, Firefox, Safari, Edge)
-- Slack workspace export data (requires workspace admin privileges)
-
 ### How to Get Slack Export Data
 
 1. **Request Export** (Admin Required):
@@ -31,13 +23,13 @@ SlackView is a web-based tool for viewing and exploring Slack workspace export d
    - Navigate to "Settings & administration" → "Workspace settings"
    - Click on "Import/Export Data"
    - Select "Export" and choose date range
-   - Download the ZIP file when ready (e.g., `@YourWorkspace Slack export Jun 22 2016 - Jul 24 2025.zip`)
+   - Download the ZIP file when ready (e.g., `@YourWorkspace Slack export <date_range>.zip`)
 
 2. **Extract the ZIP File**:
    - Extract the downloaded ZIP file to a folder
    - You'll get a structure like this:
    ```
-   @YourWorkspace Slack export Jun 22 2016 - Jul 24 2025/
+   @YourWorkspace Slack export <date_Range>/
    ├── channels.json
    ├── users.json
    ├── canvases.json
@@ -61,29 +53,10 @@ SlackView is a web-based tool for viewing and exploring Slack workspace export d
 
 1. **Download SlackView**: Download or clone this repository
 2. **Open the App**: Open `index.html` in your web browser
-3. **Extract Your Export**: First, extract your Slack export ZIP file (e.g., `@YourWorkspace Slack export Jun 22 2016 - Jul 24 2025.zip`)
+3. **Extract Your Export**: First, extract your Slack export ZIP file (e.g., `@YourWorkspace Slack export <date_range>.zip`)
 4. **Upload the Folder**: Click "Upload your Slack export files" and select the **extracted folder** (not the ZIP file)
 5. **Wait for Processing**: The app will process all channel folders and JSON files
 6. **Browse and Explore**: Browse channels, search messages, and view statistics!
-
-### 📁 Expected Slack Export Structure
-
-When you extract your Slack export ZIP file, you should see:
-
-**Root Files:**
-- `channels.json` - Channel information and metadata
-- `users.json` - User directory and profiles
-- `canvases.json` - Slack Canvas documents
-- `file_conversations.json` - File sharing conversations
-- `huddle_transcripts.json` - Audio huddle transcripts
-- `integration_logs.json` - Bot and app integration logs
-- `lists.json` - Slack lists and workflow data
-
-**Channel Folders:**
-Each public channel will have its own folder (e.g., `general/`, `random/`, `announcements/`) containing daily JSON files:
-- `2024-01-01.json` - Messages from January 1st, 2024
-- `2024-01-02.json` - Messages from January 2nd, 2024
-- And so on...
 
 > **Note**: Only public channels are included in exports. Private channels and DMs require special admin permissions and may not be included.
 
@@ -98,57 +71,6 @@ SlackView/
 └── .gitignore         # Git ignore rules
 ```
 
-## 🔧 Technical Details
-
-### Supported File Types
-
-The tool processes these files from Slack exports:
-
-**Root Configuration Files:**
-- `channels.json` - Channel information and metadata
-- `users.json` - User directory and profiles
-
-**Channel Message Files:**
-- Daily JSON files in channel folders (e.g., `general/2024-01-01.json`)
-- Each file contains all messages from that channel for that specific day
-
-**Additional Files (Future Support):**
-- `canvases.json` - Slack Canvas documents *(planned)*
-- `file_conversations.json` - File sharing conversations *(planned)*
-- `huddle_transcripts.json` - Audio huddle transcripts *(planned)*
-- `integration_logs.json` - Bot and app integration logs *(planned)*
-- `lists.json` - Slack lists and workflow data *(planned)*
-
-### Features in Detail
-
-#### Message Formatting
-- **User mentions**: `@username` format
-- **Channel references**: `#channel-name` format
-- **URLs**: Clickable links with optional display text
-- **Code blocks**: Syntax highlighted code sections
-- **Inline code**: `code` formatting
-- **Text formatting**: Bold, italic, strikethrough
-
-#### Search Functionality
-- Search across message content
-- Search by username
-- Real-time filtering
-- Highlighted search results
-
-#### Statistics Panel
-- Total channels, users, and messages
-- Date range of conversations
-- Most active channels
-- Most active users
-- Top 5 rankings for activity
-
-## 🌐 Browser Compatibility
-
-- ✅ Chrome 60+
-- ✅ Firefox 55+
-- ✅ Safari 12+
-- ✅ Edge 79+
-
 ## 🔒 Privacy & Security
 
 - **100% Client-Side**: All processing happens in your browser
@@ -158,20 +80,8 @@ The tool processes these files from Slack exports:
 
 ## 🤝 Contributing
 
-Contributions are welcome! Here's how you can help:
+Contributions are welcome! Make sure you fork the repository
 
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature-name`
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
-
-### Development Setup
-
-1. Clone the repository
-2. Open `index.html` in your browser
-3. Make changes to HTML, CSS, or JavaScript
-4. Refresh browser to test
 
 ## 📝 License
 
@@ -223,18 +133,6 @@ This project is open source and available under the [MIT License](LICENSE).
 - Chrome 60+, Firefox 55+, Safari 12+, Edge 79+
 - JavaScript must be enabled
 - File API support required (all modern browsers)
-
-### Performance Tips
-- **Large Workspaces**: Exports with 50+ channels may take longer to process
-- **Memory Usage**: Large exports may use significant browser memory
-- **Mobile Devices**: Works on mobile but desktop recommended for large exports
-
-## 💡 Tips
-
-- **Large Exports**: For workspaces with many channels, consider processing smaller date ranges
-- **Performance**: Close other browser tabs for better performance with large datasets
-- **Mobile**: The responsive design works well on tablets and phones
-- **Search**: Use partial words to find messages more easily
 
 ## 📞 Support
 
