@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slack Export Viewer</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container-fluid">
+        <!-- Header -->
+        <div class="header-container">
+            <div class="row bg-primary text-white">
+                <div class="col">
+                    <div class="px-4">
+                        <h2 class="header-title"><i class="bi bi-archive"></i> SlackView Archive Explorer</h2>
+                        <div class="upload-area">
+                            <div class="row align-items-center">
+                                <div class="col-md-6">
+                                    <label for="file-input" class="form-label">
+                                        <i class="bi bi-folder2-open"></i> Select Slack Export Folder
+                                    </label>
+                                    <input type="file" id="file-input" class="form-control" webkitdirectory directory multiple>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="progress-container">
+                                        <div class="progress" id="progress-bar" style="display: none;">
+                                            <div class="progress-bar" id="progress-fill" role="progressbar"></div>
+                                        </div>
+                                        <div id="status" class="status-text"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-container">
+            <div class="row h-100 g-0">
+                <!-- Sidebar -->
+                <div class="col-md-3" id="sidebar">
+                    <div class="p-3 border-bottom border-light">
+                        <h5 id="workspace-name" style="color: #333; font-weight: 600;">Workspace Channels</h5>
+                    </div>
+                    
+                    <!-- Channels Section -->
+                    <div class="px-3 py-3 flex-grow-1">
+                        <div id="channel-list">
+                            <div class="text-muted small">No channels loaded</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Content Area -->
+                <div class="col-md-9 d-flex flex-column" id="main-content">
+                    <!-- Channel Header -->
+                    <div class="channel-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h4 id="current-channel"># Welcome</h4>
+                                <small class="text-muted" id="channel-info">Select a channel to view messages</small>
+                            </div>
+                            <div class="col-auto">
+                                <div class="input-group">
+                                    <input type="text" id="search-input" class="form-control" placeholder="Search messages...">
+                                    <button id="search-btn" class="btn btn-outline-secondary"><i class="bi bi-search"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Messages Area -->
+                    <div id="message-container" class="p-4 flex-grow-1">
+                        <div class="text-center text-muted py-5">
+                            <div class="mb-4">
+                                <i class="bi bi-archive-fill" style="font-size: 3rem; color: #64748b;"></i>
+                            </div>
+                            <h3 class="mb-3">Welcome to Slack Export Viewer</h3>
+                            <p class="mb-4">Upload your extracted Slack export folder to get started.</p>
+                            <div class="mt-5">
+                                <h5 class="mb-3">Instructions:</h5>
+                                <div class="text-start mx-auto" style="max-width: 500px;">
+                                    <ol>
+                                        <li class="mb-2">Extract your Slack export ZIP file</li>
+                                        <li class="mb-2">Click "Upload Slack Export Folder" above</li>
+                                        <li class="mb-2">Select the extracted folder (not the ZIP file)</li>
+                                        <li class="mb-2">Wait for processing to complete</li>
+                                        <li class="mb-2">Browse channels and messages!</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Statistics Modal -->
+    <div class="modal fade" id="statsModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Workspace Statistics</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="stats-content">
+                    <p>No data loaded</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="script.js"></script>
+</body>
+</html>

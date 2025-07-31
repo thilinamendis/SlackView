@@ -1,0 +1,383 @@
+/* Custom styles for Slack Export Viewer */
+
+:root {
+    --primary-blue: #2563eb;
+    --primary-purple: #7c3aed;
+    --accent-orange: #f59e0b;
+    --accent-green: #10b981;
+    --sidebar-color: #1e293b;
+    --sidebar-hover: #334155;
+}
+
+/* Override Bootstrap styles */
+html, body {
+    height: 100%;
+    overflow: hidden; /* Disable both horizontal and vertical scrolling on page */
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.container-fluid {
+    height: 100vh;
+    padding: 0;
+    overflow: hidden; /* Disable scrolling on main container */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header container */
+.header-container {
+    flex-shrink: 0;
+    min-height: 100px;
+}
+
+/* Main content container */
+.main-container {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 100px); /* Subtract header height */
+}
+
+.main-container .row {
+    flex: 1;
+    margin: 0;
+    height: 100%;
+}
+
+/* Header styles */
+.bg-primary {
+    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-purple) 50%, var(--accent-orange) 100%) !important;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 1rem 0 !important;
+}
+
+/* Enhanced header styling */
+.header-title {
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    font-weight: 600;
+    font-size: 1.5rem;
+    margin-bottom: 0.25rem;
+}
+
+.upload-area {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    padding: 0.75rem;
+    margin-top: 0.25rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.upload-area .form-control {
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 6px;
+    padding: 0.4rem 0.6rem;
+    font-size: 0.85rem;
+}
+
+.upload-area .form-label {
+    color: rgba(255, 255, 255, 0.95);
+    font-weight: 500;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    font-size: 0.85rem;
+    margin-bottom: 0.4rem;
+}
+
+/* Sidebar styles */
+#sidebar {
+    background: #f8f9fa;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden; /* Disable horizontal scrolling */
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid #e9ecef;
+}
+
+/* Ensure main content column takes full height */
+.col-md-9 {
+    height: 100%;
+    max-height: 100%;
+}
+
+/* Ensure sidebar channels section is scrollable */
+#sidebar .px-3.py-3.flex-grow-1 {
+    overflow-y: auto;
+    flex: 1;
+    min-height: 0; /* Important for flexbox scrolling */
+}
+
+/* Channel list container */
+#channel-list {
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+}
+
+/* Custom scrollbar for sidebar */
+#sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+#sidebar::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+#sidebar::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 3px;
+}
+
+#sidebar::-webkit-scrollbar-thumb:hover {
+    background: #a1a1a1;
+}
+
+.channel-item:hover {
+    background-color: #d1ecf1 !important;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.channel-item.active {
+    background-color: #007bff !important;
+    color: white;
+    border-radius: 4px;
+}
+
+.channel-item {
+    transition: all 0.2s ease;
+    border-radius: 4px;
+    margin-bottom: 2px;
+    padding: 8px 12px;
+    font-size: 0.9rem;
+    color: #495057;
+}
+
+/* Add a simple # prefix to channels */
+.channel-item:before {
+    content: "# ";
+    color: #6c757d;
+    margin-right: 4px;
+}
+
+/* Make # prefix white when channel is active */
+.channel-item.active:before {
+    color: white;
+}
+
+/* Custom classes for non-header elements */
+.user-avatar-bg {
+    background-color: #6c757d !important;
+}
+
+.user-mention-badge {
+    background-color: #6c757d !important;
+}
+
+/* Message area styles */
+#message-container {
+    background-color: #fff;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden; /* Disable horizontal scrolling */
+    flex: 1;
+    min-height: 0; /* Important for flexbox scrolling */
+}
+
+/* Ensure main content area allows scrolling */
+#main-content {
+    height: 100%;
+    max-height: 100vh;
+    overflow: hidden;
+}
+
+/* Channel header styling */
+.channel-header {
+    background: #ffffff;
+    border-bottom: 1px solid #e9ecef;
+    padding: 1rem 1.5rem;
+    flex-shrink: 0; /* Prevent header from shrinking */
+}
+
+.channel-header h4 {
+    font-weight: 600;
+    color: #343a40;
+    margin-bottom: 0.25rem;
+}
+
+.channel-header .text-muted {
+    font-size: 0.9rem;
+}
+
+/* Custom scrollbar for message container */
+#message-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+#message-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+#message-container::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+}
+
+#message-container::-webkit-scrollbar-thumb:hover {
+    background: #a1a1a1;
+}
+
+.message-item {
+    transition: background-color 0.2s ease;
+}
+
+.message-item:hover {
+    background-color: #f8f9fa;
+}
+
+/* Message content styles */
+.message-content {
+    line-height: 1.5;
+    word-wrap: break-word;
+}
+
+.message-content pre {
+    font-size: 0.9rem;
+    margin: 0.5rem 0;
+}
+
+.message-content code {
+    font-size: 0.9em;
+}
+
+/* Attachment styles */
+.attachment {
+    border-left: 3px solid var(--accent-green);
+    background-color: #f8f9fa !important;
+}
+
+/* Search highlight */
+.border-warning {
+    border-color: #ffc107 !important;
+    background-color: #fff3cd !important;
+}
+
+/* User status indicator */
+.status-indicator {
+    flex-shrink: 0;
+}
+
+/* Enhanced Progress bar - notification style */
+.progress {
+    height: 3px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
+    overflow: hidden;
+    box-shadow: none;
+    margin: 0;
+}
+
+.progress-bar {
+    background: linear-gradient(45deg, var(--accent-green), var(--accent-orange));
+    transition: width 0.3s ease;
+    border-radius: 2px;
+    box-shadow: none;
+}
+
+/* Progress container for proper alignment */
+.progress-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    padding-left: 1rem;
+}
+
+/* Status text styling */
+.status-text {
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.85);
+    margin-top: 0.25rem;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    line-height: 1.2;
+    min-height: 1rem;
+}
+
+/* Welcome content styling */
+.welcome-content {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    #sidebar {
+        min-height: auto;
+        max-height: 300px;
+    }
+    
+    .row {
+        flex-direction: column;
+    }
+    
+    .col-md-3 {
+        order: 2;
+    }
+    
+    .col-md-9 {
+        order: 1;
+    }
+}
+
+/* Loading spinner */
+.spinner-border {
+    color: var(--primary-purple);
+}
+
+/* Alert customization */
+.alert {
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+}
+
+/* Badge styles */
+.badge {
+    font-size: 0.75em;
+}
+
+/* Hover effects for interactive elements */
+.cursor-pointer {
+    cursor: pointer;
+}
+
+/* File input styling */
+.form-control[type="file"] {
+    cursor: pointer;
+}
+
+/* Channel header */
+.bg-light {
+    border-bottom: 2px solid #e9ecef !important;
+}
+
+/* Message timestamp */
+.text-muted {
+    font-size: 0.875rem;
+}
+
+/* Avatar placeholder */
+.rounded-circle {
+    object-fit: cover;
+}
+
+/* Links in messages */
+.message-content a {
+    color: #0066cc;
+    text-decoration: none;
+}
+
+.message-content a:hover {
+    text-decoration: underline;
+}
